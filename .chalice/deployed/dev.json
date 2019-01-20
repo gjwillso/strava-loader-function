@@ -1,0 +1,34 @@
+{
+  "resources": [
+    {
+      "name": "default-role",
+      "resource_type": "iam_role",
+      "role_arn": "arn:aws:iam::920365273881:role/strava-loader-function-dev",
+      "role_name": "strava-loader-function-dev"
+    },
+    {
+      "name": "handle_s3_event",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:eu-west-1:920365273881:function:strava-loader-function-dev-handle_s3_event"
+    },
+    {
+      "name": "handle_s3_event-s3event",
+      "resource_type": "s3_event",
+      "bucket": "strava-loader",
+      "lambda_arn": "arn:aws:lambda:eu-west-1:920365273881:function:strava-loader-function-dev-handle_s3_event"
+    },
+    {
+      "name": "api_handler",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:eu-west-1:920365273881:function:strava-loader-function-dev"
+    },
+    {
+      "name": "rest_api",
+      "resource_type": "rest_api",
+      "rest_api_id": "h3gwi5gic9",
+      "rest_api_url": "https://h3gwi5gic9.execute-api.eu-west-1.amazonaws.com/api/"
+    }
+  ],
+  "schema_version": "2.0",
+  "backend": "api"
+}
