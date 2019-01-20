@@ -53,27 +53,27 @@ def index():
 
     if response["commute"] == True:
         s3 = boto3.resource('s3')
-        s3.Object('strava-loader', "strava-stats.json").put(Body=json.dumps(response))
+        s3.Object('strava-commute', "strava-commute-stat.json").put(Body=json.dumps(response))
     else:
         app.log.debug("Not a Commute Activity - Dropping")
   
-@app.on_s3_event(bucket='strava-loader',events=['s3:ObjectCreated:*'])
-def handle_s3_event(event):
-    app.log.debug("Received event for bucket: %s, key: %s", event.bucket, event.key)
-  
-    s3 = boto3.client('s3')
+#@app.on_s3_event(bucket='strava-loader',events=['s3:ObjectCreated:*'])
+#def handle_s3_event(event):
+#    app.log.debug("Received event for bucket: %s, key: %s", event.bucket, event.key)
+#  
+#    s3 = boto3.client('s3')
     
-    r = s3.select_object_content(
-        Bucket='strava-loader',
-        Key='strava-stats.json',
-        ExpressionType='SQL',
-        Expression="SELECT s FROM s3object s WHERE s.commute = true", 
-        InputSerialization={'JSON': {"Type": "Lines"}},
-        OutputSerialization={'JSON': {}}
-    )
+#    r = s3.select_object_content(
+#        Bucket='strava-loader',
+#        Key='strava-stats.json',
+#        ExpressionType='SQL',
+#        Expression="SELECT s FROM s3object s WHERE s.commute = true", 
+#        InputSerialization={'JSON': {"Type": "Lines"}},
+#        OutputSerialization={'JSON': {}}
+#    )
 
-    for event in r['Payload']:
-        if 'Records' in event:
-            records = event['Records']['Payload'].decode('utf-8')
-            s3 = boto3.resource('s3')
-            s3.Object('strava-commute', "strava-commute-stats.json").put(Body=records)
+#    for event in r['Payload']:
+#        if 'Records' in event:
+#            records = event['Records']['Payload'].decode('utf-8')
+#            s3 = boto3.resource('s3')
+#            s3.Object('strava-commute', "strava-commute-stats.json").put(Body=records)
