@@ -1,9 +1,6 @@
 import requests
-import os
 import json
-import psycopg2
 import boto3
-import base64 
 from chalice import Chalice, Response, NotFoundError
 from botocore.exceptions import ClientError
 
